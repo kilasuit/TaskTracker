@@ -41,10 +41,6 @@ $NonInteractiveDefaultProcesses = @(
     'WinStore.App',
     'YourPhone'
     )
-    
-    
-    
-    )
 
 Add-Type $code -Name Utils -Namespace Win32
 while (1) {
