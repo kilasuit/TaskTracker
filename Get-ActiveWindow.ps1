@@ -43,12 +43,14 @@ $NonInteractiveDefaultProcesses = @(
     )
 
 Add-Type $code -Name Utils -Namespace Win32
+$csvPath = "C:\tracker\$(Get-Date -Format dd-MM-yy)-ActiveWindow.csv"
+
 while (1) {
         
     $hwnd = [Win32.Utils]::GetForegroundWindow()
     Get-Process -IncludeUserName | 
     Where-Object { ($_.mainWindowHandle -eq $hwnd) -and ($_.userName -match $env:USERNAME) -and ($_.ProcessName -notin $NonInteractiveDefaultProcesses) } | 
     Select-Object processName, MainWindowTitle, MainWindowHandle, @{name = 'CurrentTime' ; expression = { [datetime]::Now.ToLongTimeString() } }, @{name = 'CurrentDate' ; expression = { [datetime]::Now.ToShortDateString() } } |  
-    Export-Csv -Path C:\tracker\ActiveWindow.csv -Append
+    Export-Csv -Path $csvPath -Append
     Start-Sleep -Seconds 1
 } 
