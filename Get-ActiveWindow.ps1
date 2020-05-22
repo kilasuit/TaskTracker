@@ -51,6 +51,6 @@ while (1) {
     Get-Process -IncludeUserName | 
     Where-Object { ($_.mainWindowHandle -eq $hwnd) -and ($_.userName -match $env:USERNAME) -and ($_.ProcessName -notin $NonInteractiveDefaultProcesses) } | 
     Select-Object processName, MainWindowTitle, MainWindowHandle, @{name = 'CurrentTime' ; expression = { [datetime]::Now.ToLongTimeString() } }, @{name = 'CurrentDate' ; expression = { [datetime]::Now.ToShortDateString() } } |  
-    Export-Csv -Path $csvPath -Append
+    Export-Csv -Path $csvPath -Append -NoTypeInformation
     Start-Sleep -Seconds 1
 } 
